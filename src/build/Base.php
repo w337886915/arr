@@ -55,10 +55,11 @@ class Base
         $arr = [];
         foreach ($data as $v) {
             if ($v[$fieldPid] == $pid) {
-                $arr[$v[$fieldPri]]           = $v;
-                $arr[$v[$fieldPri]]['_level'] = $level;
-                $arr[$v[$fieldPri]]['_html']  = str_repeat($html, $level - 1);
-                $arr[$v[$fieldPri]]["_data"]  = $this->channelLevel(
+
+                $temp           = $v;
+                $temp['_level'] = $level;
+                $temp['_html']  = str_repeat($html, $level - 1);
+                $temp["_data"]  = $this->channelLevel(
                     $data,
                     $v[$fieldPri],
                     $html,
@@ -66,6 +67,10 @@ class Base
                     $fieldPid,
                     $level + 1
                 );
+                if(empty($temp["_data"])){
+                    unset($temp["_data"]);
+                }
+                $arr[]=$temp;
             }
         }
 
@@ -117,7 +122,7 @@ class Base
             $data[$n]['_first'] = false;
             $data[$n]['_end']   = false;
             if ( ! isset($data[$n - 1])
-                 || $data[$n - 1]['_level'] != $m['_level']
+                || $data[$n - 1]['_level'] != $m['_level']
             ) {
                 $data[$n]['_first'] = true;
             }

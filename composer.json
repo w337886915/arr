@@ -29,5 +29,11 @@
     "psr-4": {
       "tests\\": "tests"
     }
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.org"
+    }
   }
 }
